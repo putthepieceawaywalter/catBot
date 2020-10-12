@@ -3,10 +3,13 @@ import praw
 import json
 import requests
 
+
+pw = [line.rstrip() for line in open('.secreto')]
+
 reddit = praw.Reddit(client_id='8wwI5YSfA5dTXQ',
     client_secret='6OHgyygRRUa2aiJH_IfrvU0SzMo',
     username='CoolKittensCoolCats',
-    password='password',
+    password=pw,
     user_agent='catBot by /u/putthepieceawaywalte')
 
 subreddit = reddit.subreddit('CoolKittensCoolCats')
@@ -30,12 +33,29 @@ kw = {"I'm sad",
 
 
 
-for comment in subreddit.stream.comments():
+for comment in subreddit.stream.comments(skip_existing=True):
     for k in kw:
+        print("looping")
         if k.lower() in comment.body.lower():
             print("another day fixed")
             for x in r.json():
                 comment.reply('{}'.format(x['url'])) 
+
+#for comment in subreddit.stream.comments(skip_existing=True):
+#    has_keyword = None
+#        for k in kw:
+#            if k.lower() in comment.body.lower():
+#                print("another cat to the rescue")
+#                
+#
+#for k in kw:
+#    print(k)
+#    for comment in subreddit.stream.comments(skip_existing=True):
+#        if k.lower() in comment.body.lower():
+#            print("yyyyyyyyyyyyyyyeeeeeeeeeeeesssssssss")
+#            for x in r.json():
+#                comment.reply('{}'.format(x['url']))
+#
 
 
 #for k in keywords:
@@ -43,7 +63,7 @@ for comment in subreddit.stream.comments():
 #    for comment in subreddit.stream.comments():
 #        if k in comment.body.lower():
 #            print(comment.body.lower())
-#            comment.reply('https://cataas.com/cat')
+#            comment.reply('{}'.format(x)
 
 #if comment.subreddit == k:
 #    print("found a match")
